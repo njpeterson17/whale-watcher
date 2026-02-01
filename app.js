@@ -15,11 +15,10 @@ const HISTORY_HOURS = 24;
 // Transaction size thresholds
 const THRESHOLDS = {
     btc: {
-        MEGA: 5,
-        LARGE: 2,
-        MEDIUM: 1,
-        SMALL: 0.5,
-        TINY: 0.1
+        MEGA: 10,      // 10+ BTC - Mega Whales
+        LARGE: 5,      // 5-9.99 BTC - Whales
+        MEDIUM: 2,     // 2-4.99 BTC - Large Fish
+        SMALL: 0.5     // 0.5-1.99 BTC - Medium Fish
     },
     eth: {
         MEGA: 10000,
@@ -95,12 +94,12 @@ function getTxCategory(crypto, amount) {
     if (amount >= t.MEDIUM) return 'medium';
     if (amount >= t.SMALL) return 'small';
     if (crypto === 'eth') return 'shrimp';
-    return 'tiny';
+    return 'small'; // Below threshold but still tracked
 }
 
 function getCategoryIcon(category) {
-    const icons = { mega: '🐋', large: '🦈', medium: '🐡', small: '🐟', tiny: '🐠', shrimp: '🦐' };
-    return icons[category] || '🐠';
+    const icons = { mega: '🐋', large: '🦈', medium: '🐡', small: '🐟', shrimp: '🦐' };
+    return icons[category] || '🐟';
 }
 
 // Storage functions
@@ -474,12 +473,6 @@ function updateStats(crypto) {
     if (mediumEl) mediumEl.textContent = medium.length;
     if (smallEl) smallEl.textContent = small.length;
 
-    // Tiny count for BTC
-    if (crypto === 'btc') {
-        const tiny = recentTxs.filter(t => t.category === 'tiny');
-        const tinyEl = getEl(`${crypto}-tinyCount`);
-        if (tinyEl) tinyEl.textContent = tiny.length;
-    }
 
     // Shrimp count for ETH
     if (crypto === 'eth') {
