@@ -26,7 +26,8 @@ const THRESHOLDS = {
         MEGA: 10000,
         LARGE: 1000,
         MEDIUM: 100,
-        SMALL: 10
+        SMALL: 10,
+        SHRIMP: 1
     }
 };
 
@@ -93,11 +94,12 @@ function getTxCategory(crypto, amount) {
     if (amount >= t.MEGA) return 'mega';
     if (amount >= t.LARGE) return 'large';
     if (amount >= t.MEDIUM) return 'medium';
-    return 'small';
+    if (amount >= t.SMALL) return 'small';
+    return crypto === 'eth' ? 'shrimp' : 'small';
 }
 
 function getCategoryIcon(category) {
-    const icons = { mega: '🐋', large: '🦈', medium: '🐟', small: '🐠' };
+    const icons = { mega: '🐋', large: '🦈', medium: '🐟', small: '🐠', shrimp: '🦐' };
     return icons[category] || '🐠';
 }
 
@@ -258,7 +260,7 @@ async function fetchETHTransactions() {
                     for (const tx of data.result.transactions) {
                         const ethAmount = parseInt(tx.value, 16) / 1e18;
                         
-                        if (ethAmount >= THRESHOLDS.eth.SMALL) {
+                        if (ethAmount >= THRESHOLDS.eth.SHRIMP) {
                             const category = getTxCategory('eth', ethAmount);
                             const blockTime = parseInt(data.result.timestamp, 16);
                             
@@ -350,8 +352,17 @@ function updateStats(crypto) {
     getEl(`${crypto}-mediumCount`).textContent = medium.length;
     getEl(`${crypto}-smallCount`).textContent = small.length;
 
+    // Shrimp count for ETH
+    if (crypto === 'eth') {
+        const shrimp = recentTxs.filter(t => t.category === 'shrimp');
+        const shrimpEl = getEl(`${crypto}-shrimpCount`);
+        if (shrimpEl) shrimpEl.textContent = shrimp.length;
+    }
+
     const totalVol = recentTxs.reduce((sum, t) => sum + t.usd, 0);
-    getEl(`${crypto}-totalVolume`).textContent = formatUSD(totalVol);
+    if (getEl(`${crypto}-totalVolume`)) {
+        getEl(`${crypto}-totalVolume`).textContent = formatUSD(totalVol);
+    }
 }
 
 function renderTransactions(crypto) {

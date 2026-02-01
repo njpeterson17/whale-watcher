@@ -18,6 +18,7 @@
     --large: #ffa502;
     --medium: #2ed573;
     --small: #70a1ff;
+    --shrimp: #ff9ff3;
     --glass: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
 }
@@ -449,6 +450,10 @@ header {
     border-left-color: var(--small);
 }
 
+.tx-card.shrimp {
+    border-left-color: var(--shrimp);
+}
+
 .tx-icon {
     font-size: 32px;
     width: 50px;
@@ -538,6 +543,10 @@ header {
     color: var(--small);
 }
 
+.tx-card.shrimp .tx-crypto {
+    color: var(--shrimp);
+}
+
 .tx-usd {
     font-size: 14px;
     color: var(--text-secondary);
@@ -570,6 +579,11 @@ header {
 .tx-badge.small {
     background: rgba(112, 161, 255, 0.2);
     color: var(--small);
+}
+
+.tx-badge.shrimp {
+    background: rgba(255, 159, 243, 0.2);
+    color: var(--shrimp);
 }
 
 /* New Transaction Animation */
