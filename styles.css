@@ -450,6 +450,11 @@ header {
     border-left-color: var(--small);
 }
 
+.tx-card.tiny {
+    border-left-color: var(--small);
+    opacity: 0.8;
+}
+
 .tx-card.shrimp {
     border-left-color: var(--shrimp);
 }
@@ -543,6 +548,10 @@ header {
     color: var(--small);
 }
 
+.tx-card.tiny .tx-crypto {
+    color: var(--small);
+}
+
 .tx-card.shrimp .tx-crypto {
     color: var(--shrimp);
 }
@@ -578,6 +587,11 @@ header {
 
 .tx-badge.small {
     background: rgba(112, 161, 255, 0.2);
+    color: var(--small);
+}
+
+.tx-badge.tiny {
+    background: rgba(112, 161, 255, 0.15);
     color: var(--small);
 }
 

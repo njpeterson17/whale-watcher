@@ -17,10 +17,11 @@ const HISTORY_HOURS = 24;
 // Transaction size thresholds
 const THRESHOLDS = {
     btc: {
-        MEGA: 1000,
-        LARGE: 100,
-        MEDIUM: 10,
-        SMALL: 1
+        MEGA: 5,
+        LARGE: 2,
+        MEDIUM: 1,
+        SMALL: 0.5,
+        TINY: 0.1
     },
     eth: {
         MEGA: 10000,
@@ -95,11 +96,13 @@ function getTxCategory(crypto, amount) {
     if (amount >= t.LARGE) return 'large';
     if (amount >= t.MEDIUM) return 'medium';
     if (amount >= t.SMALL) return 'small';
-    return crypto === 'eth' ? 'shrimp' : 'small';
+    if (crypto === 'eth') return 'shrimp';
+    // For BTC: transactions < 0.1 BTC are ignored (below threshold)
+    return 'tiny';
 }
 
 function getCategoryIcon(category) {
-    const icons = { mega: '🐋', large: '🦈', medium: '🐟', small: '🐠', shrimp: '🦐' };
+    const icons = { mega: '🐋', large: '🦈', medium: '🐡', small: '🐟', tiny: '🐠', shrimp: '🦐' };
     return icons[category] || '🐠';
 }
 
@@ -194,7 +197,7 @@ function processBTCTransaction(tx, blockTime) {
     tx.out.forEach(output => { totalOutput += output.value; });
     const btcAmount = totalOutput / 100000000;
 
-    if (btcAmount >= THRESHOLDS.btc.SMALL) {
+    if (btcAmount >= THRESHOLDS.btc.TINY) {
         const category = getTxCategory('btc', btcAmount);
         const largestOutput = tx.out.reduce((max, output) =>
             output.value > max.value ? output : max, tx.out[0]);
@@ -351,6 +354,13 @@ function updateStats(crypto) {
     getEl(`${crypto}-largeCount`).textContent = large.length;
     getEl(`${crypto}-mediumCount`).textContent = medium.length;
     getEl(`${crypto}-smallCount`).textContent = small.length;
+
+    // Tiny count for BTC (0.1-0.5 BTC)
+    if (crypto === 'btc') {
+        const tiny = recentTxs.filter(t => t.category === 'tiny');
+        const tinyEl = getEl(`${crypto}-tinyCount`);
+        if (tinyEl) tinyEl.textContent = tiny.length;
+    }
 
     // Shrimp count for ETH
     if (crypto === 'eth') {
