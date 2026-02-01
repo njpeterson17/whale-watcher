@@ -6,7 +6,7 @@ const API_BINANCE = 'https://data-api.binance.vision/api/v3';
 const API_ETHERSCAN = 'https://api.etherscan.io/api';
 
 // Etherscan API key - free tier allows 5 calls/sec
-const ETHERSCAN_API_KEY = 'YourEtherscanApiKey';
+const ETHERSCAN_API_KEY = 'W8YE213HG1FTZ7C26F4R9YHGM1ZTN9KTTS';
 
 const STORAGE_KEYS = {
     btc: 'whale_watcher_btc_txs',
