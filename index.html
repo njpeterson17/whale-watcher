@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐋 Whale Watcher | Crypto Transaction Monitor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="ocean-bg">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="whale-icon">🐋</span>
+                <div class="logo-text">
+                    <h1>Whale Watcher</h1>
+                    <p class="tagline">Crypto Large Transaction Monitor</p>
+                </div>
+            </div>
+            <div class="crypto-tabs">
+                <button class="crypto-tab active" data-crypto="btc">
+                    <span class="crypto-icon">₿</span>
+                    <span>Bitcoin</span>
+                </button>
+                <button class="crypto-tab" data-crypto="eth">
+                    <span class="crypto-icon">Ξ</span>
+                    <span>Ethereum</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Bitcoin View -->
+        <div id="btc-view" class="crypto-view active">
+            <div class="price-bar">
+                <div class="price-card">
+                    <span class="label">BTC Price</span>
+                    <span class="price" id="btcPrice">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <span class="stat-icon">🐋</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="btc-megaCount">0</span>
+                        <span class="stat-label">Mega Whales<br>(1000+ BTC)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🦈</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="btc-largeCount">0</span>
+                        <span class="stat-label">Large Whales<br>(100-999 BTC)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🐟</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="btc-mediumCount">0</span>
+                        <span class="stat-label">Medium Fish<br>(10-99 BTC)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🐠</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="btc-smallCount">0</span>
+                        <span class="stat-label">Small Fish<br>(1-9 BTC)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">💰</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="btc-totalVolume">$0</span>
+                        <span class="stat-label">Total Volume<br>(24h)</span>
+                    </div>
+                </div>
+            </div>
+
+            <main>
+                <div class="filter-bar">
+                    <h2>🌊 Bitcoin Live Feed</h2>
+                    <div class="filters" id="btc-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="mega">🐋 Mega</button>
+                        <button class="filter-btn" data-filter="large">🦈 Large</button>
+                        <button class="filter-btn" data-filter="medium">🐟 Medium</button>
+                        <button class="filter-btn" data-filter="small">🐠 Small</button>
+                    </div>
+                </div>
+
+                <div class="transaction-feed" id="btc-transactionFeed">
+                    <div class="loading-state">
+                        <div class="sonar"></div>
+                        <p>Scanning the blockchain for whales...</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Ethereum View -->
+        <div id="eth-view" class="crypto-view">
+            <div class="price-bar">
+                <div class="price-card">
+                    <span class="label">ETH Price</span>
+                    <span class="price" id="ethPrice">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <span class="stat-icon">🐋</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="eth-megaCount">0</span>
+                        <span class="stat-label">Mega Whales<br>(10,000+ ETH)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🦈</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="eth-largeCount">0</span>
+                        <span class="stat-label">Large Whales<br>(1,000-9,999 ETH)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🐟</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="eth-mediumCount">0</span>
+                        <span class="stat-label">Medium Fish<br>(100-999 ETH)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🐠</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="eth-smallCount">0</span>
+                        <span class="stat-label">Small Fish<br>(10-99 ETH)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">💰</span>
+                    <div class="stat-info">
+                        <span class="stat-value" id="eth-totalVolume">$0</span>
+                        <span class="stat-label">Total Volume<br>(24h)</span>
+                    </div>
+                </div>
+            </div>
+
+            <main>
+                <div class="filter-bar">
+                    <h2>🔷 Ethereum Live Feed</h2>
+                    <div class="filters" id="eth-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="mega">🐋 Mega</button>
+                        <button class="filter-btn" data-filter="large">🦈 Large</button>
+                        <button class="filter-btn" data-filter="medium">🐟 Medium</button>
+                        <button class="filter-btn" data-filter="small">🐠 Small</button>
+                    </div>
+                </div>
+
+                <div class="transaction-feed" id="eth-transactionFeed">
+                    <div class="loading-state">
+                        <div class="sonar"></div>
+                        <p>Scanning Ethereum for whales...</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>Bitcoin: Blockchain.info | Ethereum: Etherscan API</p>
+            <p class="last-update" id="lastUpdate">Last scan: --</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
